@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <title>Relatório de Consórcio</title>
+    <title>Agenda</title>
     <style>
         /* Reset */
         * {
@@ -17,36 +17,29 @@
         body {
             margin: 5px;
         }
-        .prevent-select{
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
     </style>
 </head>
 
 <body>
     <div class="container mt-2">
         <!-- Header -->
-        <div class="col-6">
-            <header class="text-center pt-3 pb-3 prevent-select">
+        <div class="row">
+            <div class="col">
                 <h3>Relatório de Vendas</h3>
-            </header>
-
-            <div class="col-6 text-right">
-                <button id="btnAdicionar" type="button" class="btn btn-dark">+ Adicionar Venda</button>
             </div>
-            
+            <div class="col-6 text-right">
+                <button id="btnAdicionar" type="button" class="btn btn-primary">+ Adicionar Venda</button>
+            </div>
         </div>
         <!-- Tabela -->
-        <table class="table table-hover table-dark">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>Nome</th>
                     <th>Cargo</th>
-                    <th>Código do Vendedor</th>
-                    <th>Valor de Venda</th>
-                    <th>Código de Venda</th>
+                    <th>Total de Vendas</th>
+                    <th>Maior Venda</th>
+                    <th>Comissão</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -72,7 +65,7 @@
                     <button type="button" class="close" id="closeModal">&times;</button>
                 </div>
 
-                <div class="modal-body ">
+                <div class="modal-body">
                     <form id="formAdicionarVenda">
                         <div class="form-group">
                             <label for="nome">Nome:</label>
@@ -83,19 +76,19 @@
                             <input type="text" class="form-control" id="cargo" required>
                         </div>
                         <div class="form-group">
-                            <label for="totalVendas">Código do Vendedor:</label>
-                            <input type="number" class="form-control" id="codVendedor" required>
+                            <label for="totalVendas">Total de Vendas:</label>
+                            <input type="number" class="form-control" id="totalVendas" required>
                         </div>
                         <div class="form-group">
-                            <label for="maiorVenda">Valor de venda:</label>
-                            <input type="number" class="form-control" id="valVenda" required>
+                            <label for="maiorVenda">Maior Venda:</label>
+                            <input type="number" class="form-control" id="maiorVenda" required>
                         </div>
                         <div class="form-group">
-                            <label for="comissao">Código de Venda:</label>
-                            <input type="number" class="form-control" id="codVenda" required>
+                            <label for="comissao">Comissão:</label>
+                            <input type="number" class="form-control" id="comissao" required>
                         </div>
                         <!-- Dispara o evento 'submit', pode ser resgatado no JS -->
-                        <button type="submit" class="btn btn-dark">Salvar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </form>
                 </div>
             </div>
@@ -119,7 +112,7 @@
         const btnAdicionar = document.getElementById("btnAdicionar");
         const btnFechar = document.getElementById("closeModal");
         const overlay = document.getElementById("overlay");
-        let vendas = []; // Array para armazenar os objetos da tabela
+        const vendas = []; // Array para armazenar os objetos da tabela
         let modoEdicao = false;
         let indiceEdicao = null;
 
@@ -127,20 +120,15 @@
             let tabela = document.querySelector('.table tbody');
             tabela.innerHTML = '' // Limpa a tabela
             for (let c = 0; c < vendas.length; c++) {
-                vendas[c].valVenda = parseFloat(vendas[c].valVenda)
-                    let valVendaFormatado = vendas[c].valVenda.toLocaleString('pt-BR',{
-                        style: 'currency',
-                        currency:'BRL'
-                    })
                 // Usando string literais dentro de crases para escrita multi-linha
                 // Usando também template strings (interpolação de variáveis dentro de strings)
                 let novaLinha = `<tr>
                                         <td>${vendas[c].nome}</td>
                                         <td>${vendas[c].cargo}</td>
-                                        <td>${vendas[c].codVendedor}</td>
-                                        <td>${valVendaFormatado}</td>
-                                        <td>${vendas[c].codVenda}</td>
-                                        <td><button type="button" class="btn btn-light btn-sm" onclick="atualizarDados(${c})">Editar</button></td>
+                                        <td>${vendas[c].totalVendas}</td>
+                                        <td>${vendas[c].maiorVenda}</td>
+                                        <td>${vendas[c].comissao}%</td>
+                                        <td><button class="btn btn-primary" onclick="atualizarDados(${c})">Editar</button></td>
                                     </tr>`;
                 // Adiciona conteúdo da variável 'novaLinha' na tabela
                 tabela.innerHTML += novaLinha;
@@ -182,20 +170,17 @@
             // Armazenar os valores dos campos de input
             let nome = document.getElementById('nome').value;
             let cargo = document.getElementById('cargo').value;
-            //total venda
-            let codVendedor = document.getElementById('codVendedor').value;
-            //maiorvenda
-            let valVenda = document.getElementById('valVenda').value;
-            //cod venda
-            let codVenda = document.getElementById('codVenda').value;
+            let totalVendas = document.getElementById('totalVendas').value;
+            let maiorVenda = document.getElementById('maiorVenda').value;
+            let comissao = document.getElementById('comissao').value;
 
             // Criando objeto (usando 'simple property')
-            let venda = {
+            const venda = {
                 nome: nome,         // nome: nome
                 cargo,              // cargo : cargo
-                codVendedor,           // totalVendas: totalVendas
-                valVenda,               // maiorVenda: maiorVenda
-                codVenda
+                totalVendas,           // totalVendas: totalVendas
+                maiorVenda,               // maiorVenda: maiorVenda
+                comissao
             };
 
             if (modoEdicao) {
@@ -221,9 +206,9 @@
 
             document.getElementById('nome').value = venda.nome;
             document.getElementById('cargo').value = venda.cargo;
-            document.getElementById('codVendedor').value = venda.codVendedor;
-            document.getElementById('valVenda').value = venda.valVenda;
-            document.getElementById('codVenda').value = venda.codVenda;
+            document.getElementById('totalVendas').value = venda.totalVendas;
+            document.getElementById('maiorVenda').value = venda.maiorVenda;
+            document.getElementById('comissao').value = venda.comissao;
 
             modoEdicao = true;
             indiceEdicao = index;
