@@ -118,14 +118,14 @@
             z-index: 2;"></div>
 
     <script>
+        let vendas = []; // array que armazena as vendas
+
         const minhaModal = document.getElementById("modalAdicionarContato");
         const btnAdicionar = document.getElementById("btnAdicionar");
         const btnFechar = document.getElementById("closeModal");
         const overlay = document.getElementById("overlay");
         const gerarBtn = document.getElementById('gerarBtn');
-        let vendas = [
-            {nome: 'Luiz', cargo: 'pleno', codVendedor: '0', valVenda: '1000', codVenda: '01'}
-        ]; // Array para armazenar os objetos da tabela
+
         let modoEdicao = false;
         let indiceEdicao = null;
 
@@ -158,6 +158,18 @@
                 tabela.innerHTML += novaLinha;
             }
         }
+
+        //função que comunica o front-end com o back-end.
+        function buscarVendas(){
+            fetch('http://localhost:5000/vendas')
+                .then(response => response.json())
+                .then(data => {
+                    vendas = data
+                    renderizarTabela()
+                })
+
+        }
+
 
         function abrirModal() {
             minhaModal.style.display = "block";
@@ -203,24 +215,35 @@
 
             // Criando objeto (usando 'simple property')
             let venda = {
-                nome: nome,         // nome: nome
-                cargo,              // cargo : cargo
-                codVendedor,           // totalVendas: totalVendas
-                valVenda,               // maiorVenda: maiorVenda
-                codVenda
+                nome,         // nome
+                cargo,              // cargo
+                codVendedor,           // código do vendedor
+                valVenda,               // valor de venda
+                codVenda                // código da venda
             };
 
-            if (modoEdicao) {
-                // Se estiver em modo de edição, substitua o item existente
-                vendas[indiceEdicao] = venda;
-                modoEdicao = false;
-                indiceEdicao = null;
-            } else {
-                // Caso contrário, adicione à lista
-                vendas.push(venda);
-            }
+            // if (modoEdicao) {
+            //     // Se estiver em modo de edição, substitua o item existente
+            //     vendas[indiceEdicao] = venda;
+            //     modoEdicao = false;
+            //     indiceEdicao = null;
+            // } else {
+            //     // Caso contrário, adicione à lista
+            //     fetch('http://localhost:5000/create', {
+            //     method: 'POST',
+            //     headers: {'Content-Type': 'application/json'},
+            //     body: JSON.stringify(venda)}).then(() => {
+            //         buscarVendas()
+            //     })
+            // }
 
-            renderizarTabela();
+            fetch('http://localhost:5000/vendas', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(venda)}).then(() => {
+                    buscarVendas()
+            })
+    
             fecharModal();
 
             // Debug
@@ -240,7 +263,7 @@
             modoEdicao = true;
             indiceEdicao = index;
         }
-        document.addEventListener('DOMContentLoaded', renderizarTabela)
+        document.addEventListener('DOMContentLoaded', buscarVendas)
     </script>
 </body>
 
