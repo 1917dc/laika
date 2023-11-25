@@ -5,7 +5,7 @@ const http = require('http')
 // array de vendas para ser acessado pelo front end
 
 let vendas = [
-    {nome: 'Luiz', cargo: 'pleno', codVendedor: '0', valVenda: '1000', codVenda: '01'}
+    {nomeVendedor: 'Luiz', cargoVendedor: 'pleno', codVendedor: '0', valorVenda: '1000', codVenda: '01'}
 ]
 
 // CRIANDO O SERVIDOR
@@ -32,6 +32,7 @@ const server = http.createServer(function(req, res){
         res.end(JSON.stringify(vendas))
     } else if(req.url === '/vendas' && req.method === 'POST'){
         // adicionar vendas no back-end
+        console.log('Adicionando contato') 
         let body = ''
 
         req.on('data', chunck => {
@@ -43,6 +44,37 @@ const server = http.createServer(function(req, res){
             res.statusCode = 200
             res.end(JSON.stringify(venda))
         })
+    } else if(req.url.startsWith('/vendas/') && req.method === 'PUT'){
+        const nomeSearch = req.url.split('/')[2];
+        console.log(req.url.split('/'));
+        let body = ''
+        req.on('data', chunck => {
+            body += chunck.toString()
+        })
+        req.on('end', () => {
+            const index = vendas.findIndex(venda => venda.nomeVendedor === nomeSearch)
+            if(index > -1){
+                vendas[index] = JSON.parse(body);
+                res.statusCode = 200
+                res.end(JSON.stringify(vendas[index]))
+            } else{
+                res.statusCode = 404
+                res.end(JSON.stringify({message: 'Rota não encontrada.'}))
+            }
+        })
+    } else if(req.url.startsWith('/vendas/') && req.method === 'DELETE'){
+        const nomeSearch = req.url.split('/')[2];
+        const index = vendas.findIndex(venda => venda.nomeVendedor === nomeSearch)
+
+        if(index > -1){
+            vendas.splice(index, 1)
+            res.statusCode = 200
+            res.end(JSON.stringify({message: 'Apagado com sucesso.'}))
+        } else{
+            res.statusCode = 404
+            res.end(JSON.stringify({message: 'Rota não encontrada.'}))
+        }
+        
     }
 })
 
