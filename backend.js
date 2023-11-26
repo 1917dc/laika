@@ -5,7 +5,13 @@ const http = require('http')
 // array de vendas para ser acessado pelo front end
 
 let vendas = [
-    {nomeVendedor: 'Luiz', cargoVendedor: 'pleno', codVendedor: '0', valorVenda: '1000', codVenda: '01'}
+    {nomeVendedor: 'Luiz', cargoVendedor: 'pleno', codVendedor: '0', valorVenda: '1000', codVenda: '01'},
+    {nomeVendedor: 'Luiz', cargoVendedor: 'pleno', codVendedor: '0', valorVenda: '1000', codVenda: '02'},
+    {nomeVendedor: 'Luiz', cargoVendedor: 'pleno', codVendedor: '0', valorVenda: '1000', codVenda: '03'},
+    {nomeVendedor: 'Luiz', cargoVendedor: 'pleno', codVendedor: '0', valorVenda: '1000', codVenda: '04'},
+    {nomeVendedor: 'Isabela', cargoVendedor: 'pleno', codVendedor: '1', valorVenda: '1000', codVenda: '05'},
+    {nomeVendedor: 'Isabela', cargoVendedor: 'pleno', codVendedor: '1', valorVenda: '1000', codVenda: '06'},
+    {nomeVendedor: 'Isabela', cargoVendedor: 'pleno', codVendedor: '1', valorVenda: '1000', codVenda: '07'},
 ]
 
 // CRIANDO O SERVIDOR

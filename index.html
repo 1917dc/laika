@@ -62,7 +62,7 @@
             </tbody>
         </table>
         <div class="text-center">
-            <button type="button" id="gerarBtn" class="btn btn-dark">Gerar Relatório</button>
+            <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas()">Gerar Relatório</button>
         </div>
     </div>
 
@@ -157,14 +157,13 @@
 
     <script>
 
+        let vendasSorted= []; // array de vendas tratado
         let vendas = []; // array que armazena as vendas
 
         const minhaModalEditar = document.getElementById('modalEditarContato')
         const btnEditar = document.getElementById('editarDados');
         const btnFecharEditar = document.getElementById('closeModalEditar')
         const formEditarVenda = document.getElementById('formEditarVenda');
-
-
 
         const minhaModal = document.getElementById("modalAdicionarContato");
         const btnAdicionar = document.getElementById("btnAdicionar");
@@ -183,6 +182,8 @@
                 valorVendaFormatado = venda.valorVenda.toLocaleString('pt-BR', {
                     style: 'currency', currency: 'BRL'
                 })
+                venda.codVenda.toString();
+                venda.codVendedor.toString();
 
                 venda.codVendedor = venda.codVendedor.padStart(3, '0')
                 venda.codVenda = venda.codVenda.padStart(3, '0')
@@ -235,7 +236,7 @@
             })
             toggleModal(minhaModal)
             formAdicionarVenda.reset()
-        }
+        }  
 
         function editarVenda(index){
             const venda = vendas[index]
@@ -292,6 +293,25 @@
                 })
         }
 
+        function sortVendas(){
+            let vendasRepetidas = []
+            let codVendasRepetidas = []
+            let vendasSorted = []
+
+            for(let i in vendas){
+                for(let j in vendas){
+                    if(vendas[i].codVendedor === vendas[j].codVendedor && !codVendasRepetidas.includes(vendas[i].codVenda)){
+                        codVendasRepetidas.push(vendas[i].codVenda)
+                        vendas[i].valorVenda += vendas[j].valorVenda
+                    }
+                }
+            }
+            
+            console.log(vendasRepetidas)
+            console.log(vendas)
+            console.log(vendasSorted)
+            console.log(codVendasRepetidas)
+        }
 
         function toggleModal(modal) {
             const isModal = modal.style.display === 'block'
@@ -315,7 +335,6 @@
         btnFecharEditar.addEventListener("click", function() {
             toggleModal(minhaModalEditar)
         })
-
     </script>
 </body>
 
