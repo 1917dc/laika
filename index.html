@@ -62,7 +62,7 @@
             </tbody>
         </table>
         <div class="text-center">
-            <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas()">Gerar Relatório</button>
+            <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas(), window.open('./teste.html')">Gerar Relatório</button>
         </div>
     </div>
 
@@ -294,23 +294,55 @@
         }
 
         function sortVendas(){
-            let vendasRepetidas = []
             let codVendasRepetidas = []
-            let vendasSorted = []
+            let vendedores = []
+            vendedor = {}
 
-            for(let i in vendas){
-                for(let j in vendas){
-                    if(vendas[i].codVendedor === vendas[j].codVendedor && !codVendasRepetidas.includes(vendas[i].codVenda)){
-                        codVendasRepetidas.push(vendas[i].codVenda)
-                        vendas[i].valorVenda += vendas[j].valorVenda
+            // como fazer? 
+                // verificar se a pessoa já foi adicionada, se não foi, adicionar
+                // criar um objeto de vendedor, para adicionar na checagem
+                // usar .includes para verificar
+            vendas.forEach(venda =>{
+                if(codVendasRepetidas.includes(venda.codVendedor)){
+                vendedores.forEach(vendedor =>{
+                    if(venda.nomeVendedor === vendedor.nome){
+                        vendedor.totalVendas += venda.valorVenda
+                        if(venda.valorVenda > vendedor.maiorVenda){
+                            vendedor.maiorVenda = venda.valorVenda
+                        }
+
+                        if(vendedor.cargo === 'Júnior'){
+                            vendedor.comissao = vendedor.totalVendas * 0.01
+                        }else if(vendedor.cargo === 'Pleno'){
+                            vendedor.comissao = vendedor.totalVendas * 0.02
+                        }else if(vendedor.cargo === 'Sênior'){
+                            vendedor.comissao = vendedor.totalVendas * 0.03
+                        }
                     }
+                })
+                } else{
+                    let nome = venda.nomeVendedor
+                    let cargo = venda.cargoVendedor
+                    let totalVendas = parseFloat(venda.valorVenda)
+                    let maiorVenda = parseFloat(venda.valorVenda)
+
+                    if(cargo === 'Júnior'){
+                        comissao = totalVendas * 0.01
+                    }else if(cargo === 'Pleno'){
+                        comissao = totalVendas * 0.02
+                    }else{
+                        comissao = totalVendas * 0.03
+                    }  
+                    vendedor = {nome, cargo, totalVendas, maiorVenda, comissao}
+
+                    vendedores.push(vendedor)
+                    codVendasRepetidas.push(venda.codVendedor);
                 }
-            }
+            })
+            console.log(vendedores)
+            console.log(localStorage)
+            localStorage.setItem('vendas',JSON.stringify(vendedores));
             
-            console.log(vendasRepetidas)
-            console.log(vendas)
-            console.log(vendasSorted)
-            console.log(codVendasRepetidas)
         }
 
         function toggleModal(modal) {

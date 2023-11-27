@@ -58,7 +58,38 @@
         </table>
     </div>
     <script>
-        
+        localStorage
+        let vendas = JSON.parse(localStorage.getItem('vendas'))
+        console.log(vendas)
+        renderizarTabela();
+
+        function renderizarTabela() {
+            let relatorioBody = document.getElementById('relatorioBody')
+            relatorioBody.innerHTML = '' // Limpa a tabela
+
+            vendas.forEach((venda, index) => {
+                venda.totalVendas = parseFloat(venda.totalVendas)
+                valorVendaFormatado = venda.totalVendas.toLocaleString('pt-BR', {
+                    style: 'currency', currency: 'BRL'
+                })
+                comissaoFormatado = venda.comissao.toLocaleString('pt-BR', {
+                    style: 'currency', currency: 'BRL'
+                })
+                maiorVendaFormatado = venda.maiorVenda.toLocaleString('pt-BR', {
+                    style: 'currency', currency: 'BRL'
+                })
+
+                relatorioBody.innerHTML += `
+                    <tr>
+                        <td>${venda.nome}</td>
+                        <td>${venda.cargo}</td>
+                        <td>${valorVendaFormatado}</td>
+                        <td>${maiorVendaFormatado}</td>
+                        <td>${comissaoFormatado}</td>
+                    </tr>
+                    `
+            })
+        }
     </script>
 </body>
 
