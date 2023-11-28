@@ -1,5 +1,0 @@
--   Para fazer o relatório filtrado terei de primeiramente
-requisitar e ter acesso aos dados do back-end.
-    * Planos para filtragem de maior venda:
-        vendas.sort(function(a, b){return a - b});
-        

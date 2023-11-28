@@ -91,7 +91,7 @@
                         </div>
                         <div class="form-group">
                             <label for="valorVenda">Valor de venda:</label>
-                            <input type="number" class="form-control" id="valorVenda" required>
+                            <input type="number" class="form-control" id="valorVenda" step="any" required>
                         </div>
                         <div class="form-group">
                             <label for="codVenda">Código de Venda:</label>
@@ -130,7 +130,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="valorVendaEditar">Valor de venda:</label>
-                                <input type="number" class="form-control" id="valorVendaEditar" required>
+                                <input type="number" class="form-control" id="valorVendaEditar" step="any" required>
                             </div>
                             <div class="form-group">
                                 <label for="codVendaEditar">Código de Venda:</label>
@@ -182,8 +182,8 @@
                 valorVendaFormatado = venda.valorVenda.toLocaleString('pt-BR', {
                     style: 'currency', currency: 'BRL'
                 })
-                venda.codVenda.toString();
-                venda.codVendedor.toString();
+                venda.codVenda = venda.codVenda.toString();
+                venda.codVendedor = venda.codVendedor.toString();
 
                 venda.codVendedor = venda.codVendedor.padStart(3, '0')
                 venda.codVenda = venda.codVenda.padStart(3, '0')
