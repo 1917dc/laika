@@ -24,13 +24,13 @@ const http = require('http')
             res.statusCode = 200
             res.end(JSON.stringify(vendas))
         }
-        db.close((err), () => {
-            if(err){
-                console.log('Erro', err)
-            } else{
-                console.log('O banco de dados foi fechado')
-            }
-        })
+    })
+    db.close((err) => {
+        if(err){
+            console.log('Erro', err)
+        } else{
+            console.log('O banco de dados foi fechado')
+        }
     })
     
 }
@@ -50,7 +50,8 @@ const http = require('http')
     req.on('data', chunck => body += chunck.toString())
     req.on('end', () =>{
         let venda = JSON.parse(body)
-        db.all(`INSERT INTO vendas (nomeVendedor, cargoVendedor, codVendedor, valorVenda, codVenda) VALUES (?, ?, ?, ?, ?)`, [vendas.nomeVendedor,
+        db.all(`INSERT INTO vendas (nomeVendedor, cargoVendedor, codVendedor, valorVenda, codVenda) VALUES (?, ?, ?, ?, ?)`, [
+            venda.nomeVendedor,
             venda.cargoVendedor,
             venda.codVendedor,
             venda.valorVenda,
@@ -62,21 +63,52 @@ const http = require('http')
             } else{
                 res.statusCode = 200
                 res.end(JSON.stringify(venda))
+                db.close((err) => {
+                    if(err){
+                        console.log('Erro', err)
+                    } else{
+                        console.log('O banco de dados foi fechado')
+                    }
+                })
             }
         })
     })
 
 
-    db.close((err), () => {
-        if(err){
-            console.log('Erro', err)
-        } else{
-            console.log('O banco de dados foi fechado')
-        }
-    })
   }
 
   function editVendas(req, res){
+
+
+
+    req.on('data', chunck => body += chunck.toString())
+    req.on('end', () =>{
+        let venda = JSON.parse(body)
+        db.all(`UPDATE INTO vendas (nomeVendedor, cargoVendedor, codVendedor, valorVenda, codVenda) VALUES (?,?,?,?,?)`, [
+            venda.nomeVendedor,
+            venda.cargoVendedor,
+            venda.codVendedor,
+            venda.valorVenda,
+            venda.codVenda
+        ], (err) =>{
+        
+            if(err){
+                console.log('Erro', err)
+            } else{
+                res.statusCode = 200
+                res.end(JSON.stringify(venda))
+                db.close((err) => {
+                    if(err){
+                        console.log('Erro', err)
+                    } else{
+                        console.log('O banco de dados foi fechado')
+                    }
+                })
+            }
+        })
+    })
+
+
     const nomeSearch = req.url.split('/')[2];
         console.log(req.url.split('/'));
         let body = ''
