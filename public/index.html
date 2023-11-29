@@ -2,11 +2,17 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="ISO 8859-1">
+    <!-- <meta charset="ISO 8859-1">-->
+    <meta charset="UTF-8">
+    <meta property="og:title" content="Hermes Express">
+    <meta property="og:description" content="Hermes Express - ConsÃ³rcio Ã¡gil para vocÃª!">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RelatÃ³rio de ConsÃ³rcio</title>
+    <link rel="icon" type="image/png" href="./img/favicon.png" />
+
+    <!-- CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <title>Relatório de Consórcio</title>
     <style>
         /* Reset */
         * {
@@ -30,7 +36,7 @@
         <!-- Header -->
         <div class="row mb-4 mt-4">
             <div class="col-6">
-                <h3 class="prevent-select">Relatório de Vendas</h3>
+                <h3 class="prevent-select">Relatï¿½rio de Vendas</h3>
             </div>
 
             <div class="col-6 text-right">
@@ -44,10 +50,10 @@
                 <tr>
                     <th>Nome</th>
                     <th>Cargo</th>
-                    <th>Código do Vendedor</th>
+                    <th>Cï¿½digo do Vendedor</th>
                     <th>Valor de Venda</th>
-                    <th>Código de Venda</th>
-                    <th>Ações</th>
+                    <th>Cï¿½digo de Venda</th>
+                    <th>Aï¿½ï¿½es</th>
                 </tr>
             </thead>
             <tbody id="vendasBody">
@@ -62,7 +68,7 @@
             </tbody>
         </table>
         <div class="text-center">
-            <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas(), window.open('./relatorio.html')">Gerar Relatório</button>
+            <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas(), window.open('./relatorio.html')">Gerar Relatï¿½rio</button>
         </div>
     </div>
 
@@ -86,7 +92,7 @@
                             <input type="text" class="form-control" id="cargoVendedor" required>
                         </div>
                         <div class="form-group">
-                            <label for="codVendedor">Código do Vendedor:</label>
+                            <label for="codVendedor">Cï¿½digo do Vendedor:</label>
                             <input type="number" class="form-control" id="codVendedor" required>
                         </div>
                         <div class="form-group">
@@ -94,7 +100,7 @@
                             <input type="number" class="form-control" id="valorVenda" step="any" required>
                         </div>
                         <div class="form-group">
-                            <label for="codVenda">Código de Venda:</label>
+                            <label for="codVenda">Cï¿½digo de Venda:</label>
                             <input type="number" class="form-control" id="codVenda" required>
                         </div>
                         <!-- Dispara o evento 'submit', pode ser resgatado no JS -->
@@ -125,7 +131,7 @@
                                 <input type="text" class="form-control" id="cargoEditar" required>
                             </div>
                             <div class="form-group">
-                                <label for="codVendedorEditar">Código do Vendedor:</label>
+                                <label for="codVendedorEditar">Cï¿½digo do Vendedor:</label>
                                 <input type="number" class="form-control" id="codVendedorEditar" required>
                             </div>
                             <div class="form-group">
@@ -133,7 +139,7 @@
                                 <input type="number" class="form-control" id="valorVendaEditar" step="any" required>
                             </div>
                             <div class="form-group">
-                                <label for="codVendaEditar">Código de Venda:</label>
+                                <label for="codVendaEditar">Cï¿½digo de Venda:</label>
                                 <input type="number" class="form-control" id="codVendaEditar" required>
                             </div>
                             <!-- Dispara o evento 'submit', pode ser resgatado no JS -->
@@ -144,7 +150,7 @@
             </div>
         </div>
     <!----------------------------- OVERLAY ----------------------------------->
-    <!-- position: fixed define a origem do bloco, que ocupará a tela inteira (0, 0) -->
+    <!-- position: fixed define a origem do bloco, que ocuparï¿½ a tela inteira (0, 0) -->
     <div id="overlay" style="
             height: 100%;
             width: 100%;
@@ -188,11 +194,11 @@
                 venda.codVendedor = venda.codVendedor.padStart(3, '0')
                 venda.codVenda = venda.codVenda.padStart(3, '0')
 
-                if(venda.cargoVendedor === 'junior' || venda.cargoVendedor === 'Junior' || venda.cargoVendedor === 'Júnior'){
-                    venda.cargo = 'Júnior'
+                if(venda.cargoVendedor === 'junior' || venda.cargoVendedor === 'Junior' || venda.cargoVendedor === 'Jï¿½nior'){
+                    venda.cargo = 'Jï¿½nior'
                 } else if(venda.cargoVendedor === 'pleno' || venda.cargoVendedor === 'Pleno'){
                     venda.cargoVendedor = 'Pleno'
-                } else{venda.cargoVendedor = 'Sênior'}
+                } else{venda.cargoVendedor = 'Sï¿½nior'}
 
                 vendasBody.innerHTML += `
                     <tr>
@@ -283,7 +289,7 @@
             renderizarTabela()
         }
 
-        //função que comunica o front-end com o back-end.
+        //funï¿½ï¿½o que comunica o front-end com o back-end.
         function buscarVendas(){
             fetch('http://localhost:5000/vendas')
                 .then(response => response.json())
@@ -299,7 +305,7 @@
             vendedor = {}
 
             // como fazer? 
-                // verificar se a pessoa já foi adicionada, se não foi, adicionar
+                // verificar se a pessoa jï¿½ foi adicionada, se nï¿½o foi, adicionar
                 // criar um objeto de vendedor, para adicionar na checagem
                 // usar .includes para verificar
             vendas.forEach(venda =>{
@@ -311,11 +317,11 @@
                             vendedor.maiorVenda = venda.valorVenda
                         }
 
-                        if(vendedor.cargo === 'Júnior'){
+                        if(vendedor.cargo === 'Jï¿½nior'){
                             vendedor.comissao = vendedor.totalVendas * 0.01
                         }else if(vendedor.cargo === 'Pleno'){
                             vendedor.comissao = vendedor.totalVendas * 0.02
-                        }else if(vendedor.cargo === 'Sênior'){
+                        }else if(vendedor.cargo === 'Sï¿½nior'){
                             vendedor.comissao = vendedor.totalVendas * 0.03
                         }
                     }
@@ -326,7 +332,7 @@
                     let totalVendas = parseFloat(venda.valorVenda)
                     let maiorVenda = parseFloat(venda.valorVenda)
 
-                    if(cargo === 'Júnior'){
+                    if(cargo === 'Jï¿½nior'){
                         comissao = totalVendas * 0.01
                     }else if(cargo === 'Pleno'){
                         comissao = totalVendas * 0.02
@@ -353,7 +359,7 @@
         }
 
         
-        // Ouvidor de evento de clique dos botões
+        // Ouvidor de evento de clique dos botï¿½es
         btnAdicionar.addEventListener("click", function () {
             toggleModal(minhaModal);
         });
