@@ -1,10 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
-const express = require('express'); 
-//const http = require('http')
-
-// Essa função retorna uma instância de um aplicativo Express
-const app = express(); 
+const express = require('express');
+const app = express();
 const port = 5000;
+//const http = require('http')
 
 // Middleware - Tem acesso aos objetos de req e res
 app.use(express.json()); // Analisa requisições JSON e cabeçalhos recebidos
@@ -145,10 +143,10 @@ function deleteVendas(req, res){
 
 // ---------------------------------- CONFIGURANDO O SERVIDOR ----------------------------------
 
-// Servir os arquivos estáticos localizados na pasta 'public'
+// Serve static files located in the "public" folder using Express
 app.use(express.static('public'));
 
-// CRUD - Definir as rotas
+// Define routes
 app.get('/vendas', getVendas);
 app.post('/vendas', addVendas);
 app.put('/vendas/:nomeVendedor', editVendas);
