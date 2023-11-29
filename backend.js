@@ -1,15 +1,20 @@
-// INCLUINDO O HTTP
 const sqlite3 = require('sqlite3').verbose();
-const http = require('http')
+const express = require('express');
+const app = express();
+const port = 5000;
+//const http = require('http')
 
+// Middleware - Tem acesso aos objetos de req e res
+app.use(express.json()); // Analisa requisiÃ§Ãµes JSON e cabeÃ§alhos recebidos
 
+// ---------------------------------- BANCO DE DADOS ---------------------------------- 
 
-  function getVendas(req, res){
-    //obter as vendas
+// Obter as vendas
+function getVendas(req, res){
 
     const db = new sqlite3.Database('./db.sqlite3', function(err){
         if (err) {
-          console.error(err.message);
+            console.error(err.message);
         }
         console.log('Conectado ao banco de dados.');
     });
@@ -32,16 +37,15 @@ const http = require('http')
             console.log('O banco de dados foi fechado')
         }
     })
-    
 }
 
-  function addVendas(req, res){
+function addVendas(req, res){
     // adicionar vendas no back-end
     console.log('Adicionando contato') 
 
     const db = new sqlite3.Database('./db.sqlite3', (err) => {
         if (err) {
-          console.error(err.message);
+            console.error(err.message);
         }
         console.log('Conectado ao banco de dados.');
     });
@@ -73,13 +77,9 @@ const http = require('http')
             }
         })
     })
+}
 
-
-  }
-
-  function editVendas(req, res){
-
-
+function editVendas(req, res){
 
     req.on('data', chunck => body += chunck.toString())
     req.on('end', () =>{
@@ -108,42 +108,51 @@ const http = require('http')
         })
     })
 
-
     const nomeSearch = req.url.split('/')[2];
-        console.log(req.url.split('/'));
-        let body = ''
-        req.on('data', chunck => {
-            body += chunck.toString()
-        })
-        req.on('end', () => {
-            const index = vendas.findIndex(venda => venda.nomeVendedor === nomeSearch)
-            if(index > -1){
-                vendas[index] = JSON.parse(body);
-                res.statusCode = 200
-                res.end(JSON.stringify(vendas[index]))
-            } else{
-                res.statusCode = 404
-                res.end(JSON.stringify({message: 'Rota não encontrada.'}))
-            }
-        })
-  }
-
-    function deleteVendas(req, res){
-        const nomeSearch = req.url.split('/')[2];
+    console.log(req.url.split('/'));
+    let body = ''
+    req.on('data', chunck => {
+        body += chunck.toString()
+    })
+    req.on('end', () => {
         const index = vendas.findIndex(venda => venda.nomeVendedor === nomeSearch)
-
         if(index > -1){
-            vendas.splice(index, 1)
+            vendas[index] = JSON.parse(body);
             res.statusCode = 200
-            res.end(JSON.stringify({message: 'Apagado com sucesso.'}))
+            res.end(JSON.stringify(vendas[index]))
         } else{
             res.statusCode = 404
-            res.end(JSON.stringify({message: 'Rota não encontrada.'}))
+            res.end(JSON.stringify({message: 'Rota nï¿½o encontrada.'}))
         }
+    })
+}
+
+function deleteVendas(req, res){
+    const nomeSearch = req.url.split('/')[2];
+    const index = vendas.findIndex(venda => venda.nomeVendedor === nomeSearch)
+
+    if(index > -1){
+        vendas.splice(index, 1)
+        res.statusCode = 200
+        res.end(JSON.stringify({message: 'Apagado com sucesso.'}))
+    } else{
+        res.statusCode = 404
+        res.end(JSON.stringify({message: 'Rota nï¿½o encontrada.'}))
     }
+}
 
-// CRIANDO O SERVIDOR
+// ---------------------------------- CONFIGURANDO O SERVIDOR ----------------------------------
 
+// Serve static files located in the "public" folder using Express
+app.use(express.static('public'));
+
+// Define routes
+app.get('/vendas', getVendas);
+app.post('/vendas', addVendas);
+app.put('/vendas/:nomeVendedor', editVendas);
+app.delete('/vendas/:nomeVendedor', deleteVendas);
+
+/*
 const server = http.createServer(function(req, res){
     // CORS PARA PREVINIR ERROS
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -158,7 +167,7 @@ const server = http.createServer(function(req, res){
 
     res.setHeader('Content-Type', 'application/json')
 
-    // se o endereço './api' for executado ele retornará o array de vendas em forma de string.
+    // se o endereï¿½o './api' for executado ele retornarï¿½ o array de vendas em forma de string.
 
     if(req.url === '/vendas' && req.method === 'GET'){
         getVendas(req, res)
@@ -199,7 +208,7 @@ const server = http.createServer(function(req, res){
         //         res.end(JSON.stringify(vendas[index]))
         //     } else{
         //         res.statusCode = 404
-        //         res.end(JSON.stringify({message: 'Rota não encontrada.'}))
+        //         res.end(JSON.stringify({message: 'Rota nï¿½o encontrada.'}))
         //     }
         // })
     } else if(req.url.startsWith('/vendas/') && req.method === 'DELETE'){
@@ -214,13 +223,18 @@ const server = http.createServer(function(req, res){
     //         res.end(JSON.stringify({message: 'Apagado com sucesso.'}))
     //     } else{
     //         res.statusCode = 404
-    //         res.end(JSON.stringify({message: 'Rota não encontrada.'}))
+    //         res.end(JSON.stringify({message: 'Rota nï¿½o encontrada.'}))
     //     }
         
     // }
     }
 })
+*/
 
-
-// localizando o servidor na porta 5000.
+// ---------------------------------- CRIANDO O SERVIDOR ----------------------------------
+// Localizado na porta 5000
+/*
 server.listen(5000, () => console.log('O servidor foi ligado.'))
+*/
+
+app.listen(port, () => console.log(`O servidor foi ligado na porta ${port}.`));
