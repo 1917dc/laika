@@ -43,7 +43,7 @@ function getVendas(req, res){
 
 // Adicionar vendas no back-end
 function addVendas(req, res){
-    console.log('Adicionando venda...') 
+    console.log('Adicionando contato') 
 
     const db = new sqlite3.Database('./db.sqlite3', (err) => {
         if (err) {
@@ -52,8 +52,7 @@ function addVendas(req, res){
         console.log('Conectado ao banco de dados.');
     });
 
-    // req.body accessa o JSON diretamente sem precisar converter manualmente
-    const venda = req.body; 
+    const venda = req.body; // Use req.body to directly access the parsed JSON body
 
     db.all(`INSERT INTO vendas (nomeVendedor, cargoVendedor, codVendedor, valorVenda, codVenda) VALUES (?, ?, ?, ?, ?)`, [
             venda.nomeVendedor,
