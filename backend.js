@@ -27,7 +27,7 @@ function getVendas(req, res){
             console.log('Erro', err)
         } else{
             vendas = rows;
-            console.log('(GET) O banco de dados foi conectado.')
+            console.log('O banco de dados foi conectado')
             res.statusCode = 200
             res.end(JSON.stringify(vendas))
         }
@@ -36,13 +36,13 @@ function getVendas(req, res){
         if(err){
             console.log('Erro', err)
         } else{
-            console.log('(GET) O banco de dados foi fechado.')
+            console.log('O banco de dados foi fechado')
         }
     })
 }
 
-// Adicionar vendas no back-end
 function addVendas(req, res){
+    // adicionar vendas no back-end
     console.log('Adicionando contato') 
 
     const db = new sqlite3.Database('./db.sqlite3', (err) => {
@@ -52,80 +52,94 @@ function addVendas(req, res){
         console.log('Conectado ao banco de dados.');
     });
 
-    const venda = req.body; // Use req.body to directly access the parsed JSON body
-
-    db.all(`INSERT INTO vendas (nomeVendedor, cargoVendedor, codVendedor, valorVenda, codVenda) VALUES (?, ?, ?, ?, ?)`, [
+    let body = ''
+    req.on('data', chunck => body += chunck.toString())
+    req.on('end', () =>{
+        let venda = JSON.parse(body)
+        db.all(`INSERT INTO vendas (nomeVendedor, cargoVendedor, codVendedor, valorVenda, codVenda) VALUES (?, ?, ?, ?, ?)`, [
             venda.nomeVendedor,
             venda.cargoVendedor,
             venda.codVendedor,
             venda.valorVenda,
             venda.codVenda
-        ], 
-        (err) =>{
+            ], (err) =>{
+        
             if(err){
                 console.log('Erro', err)
             } else{
-                res.status(200).json(venda);
+                res.statusCode = 200
+                res.end(JSON.stringify(venda))
                 db.close((err) => {
                     if(err){
                         console.log('Erro', err)
                     } else{
-                        console.log('(ADD) O banco de dados foi fechado.')
+                        console.log('O banco de dados foi fechado')
                     }
                 })
             }
+        })
     })
 }
 
-function editVendas(req, res) {
-    const nomeSearch = req.params.nomeVendedor; 
-    const venda = req.body;
+function editVendas(req, res){
 
-    const db = new sqlite3.Database('./db.sqlite3', (err) => {
-        if (err) {
-            console.error(err.message);
-        }
-        console.log('Conectado ao banco de dados.');
-    });
-
-    db.run(
-        `UPDATE vendas SET nomeVendedor=?, cargoVendedor=?, codVendedor=?, valorVenda=?, codVenda=? WHERE nomeVendedor=?`,
-        [
+    req.on('data', chunck => body += chunck.toString())
+    req.on('end', () =>{
+        let venda = JSON.parse(body)
+        db.all(`UPDATE INTO vendas (nomeVendedor, cargoVendedor, codVendedor, valorVenda, codVenda) VALUES (?,?,?,?,?)`, [
             venda.nomeVendedor,
             venda.cargoVendedor,
             venda.codVendedor,
             venda.valorVenda,
-            venda.codVenda,
-            nomeSearch,
-        ],
-        (err) => {
-            if (err) {
-                console.log('Erro', err);
-            } else {
-                res.status(200).json(venda);
+            venda.codVenda
+        ], (err) =>{
+        
+            if(err){
+                console.log('Erro', err)
+            } else{
+                res.statusCode = 200
+                res.end(JSON.stringify(venda))
                 db.close((err) => {
-                    if (err) {
-                        console.log('Erro', err);
-                    } else {
-                        console.log('(EDIT) O banco de dados foi fechado.');
+                    if(err){
+                        console.log('Erro', err)
+                    } else{
+                        console.log('O banco de dados foi fechado')
                     }
-                });
+                })
             }
+        })
+    })
+
+    const nomeSearch = req.url.split('/')[2];
+    console.log(req.url.split('/'));
+    let body = ''
+    req.on('data', chunck => {
+        body += chunck.toString()
+    })
+    req.on('end', () => {
+        const index = vendas.findIndex(venda => venda.nomeVendedor === nomeSearch)
+        if(index > -1){
+            vendas[index] = JSON.parse(body);
+            res.statusCode = 200
+            res.end(JSON.stringify(vendas[index]))
+        } else{
+            res.statusCode = 404
+            res.end(JSON.stringify({message: 'Rota n�o encontrada.'}))
         }
-    );
+    })
 }
 
 function deleteVendas(req, res){
-    const nomeSearch = req.params.nomeVendedor;
+    const nomeSearch = req.url.split('/')[2];
     const index = vendas.findIndex(venda => venda.nomeVendedor === nomeSearch)
 
     if(index > -1){
         vendas.splice(index, 1)
         res.statusCode = 200
-        res.status(200).json({ message: 'Apagado com sucesso.' });
+        res.end(JSON.stringify({message: 'Apagado com sucesso.'}))
     } else{
         res.statusCode = 404
-        res.status(404).json({ message: 'Rota não encontrada.' });
+        res.end(JSON.stringify({message: 'Rota n�o encontrada.'}))
     }
 }
 

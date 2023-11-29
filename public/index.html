@@ -68,12 +68,12 @@
             </tbody>
         </table>
         <div class="text-center">
-            <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas(), window.open('./relatorio.html')">Gerar Relatório</button>
+            <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas(), window.open('./relatorio.html')">Gerar Relat�rio</button>
         </div>
     </div>
 
     <!-- Modal -->
-    <div id="modalAdicionarVenda" class="modal">
+    <div id="modalAdicionarContato" class="modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -104,7 +104,7 @@
                             <input type="number" class="form-control" id="codVenda" required>
                         </div>
                         <!-- Dispara o evento 'submit', pode ser resgatado no JS -->
-                        <button type="submit" onclick="adicionarVenda(event)" class="btn btn-dark">Salvar</button>
+                        <button type="submit" onclick="adicionarContato(event)" class="btn btn-dark">Salvar</button>
                     </form>
                 </div>
             </div>
@@ -112,7 +112,7 @@
     </div>
 
         <!-- Modal -->
-        <div id="modalEditarVenda" class="modal">
+        <div id="modalEditarContato" class="modal">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -166,12 +166,12 @@
         let vendasSorted = []; // Array de vendas tratado
         let vendas = []; // Array que armazena as vendas
 
-        const minhaModalEditar = document.getElementById('modalEditarVenda')
+        const minhaModalEditar = document.getElementById('modalEditarContato')
         const btnEditar = document.getElementById('editarDados');
         const btnFecharEditar = document.getElementById('closeModalEditar')
         const formEditarVenda = document.getElementById('formEditarVenda');
 
-        const minhaModal = document.getElementById("modalAdicionarVenda");
+        const minhaModal = document.getElementById("modalAdicionarContato");
         const btnAdicionar = document.getElementById("btnAdicionar");
         const btnFechar = document.getElementById("closeModal");
         const formAdicionarVenda = document.getElementById('formAdicionarVenda')
@@ -221,7 +221,7 @@
             })
         }
 
-        function adicionarVenda(event){
+        function adicionarContato(event){
             event.preventDefault()
 
             // Armazenar os valores dos campos de input
@@ -237,13 +237,9 @@
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(venda)
+            }).then(() => {
+                    buscarVendas()
             })
-            .then(response => response.json())
-            .then(() => {
-                buscarVendas()
-            })
-            .catch(error => console.error('Error:', error));
-
             toggleModal(minhaModal)
             formAdicionarVenda.reset()
         }  
