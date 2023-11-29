@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="ISO 8859-1">
+    <meta charset="UTF-8">
+    <meta property="og:title" content="Hermes Express">
+    <meta property="og:description" content="Hermes Express - ConsÃ³rcio Ã¡gil para vocÃª!">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados</title>
+    <link rel="icon" type="image/png" href="./img/favicon.png" />
+
+    <!-- CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <title>Relatório de Consórcio</title>
     <style>
         /* Reset */
         * {
@@ -30,7 +34,7 @@
         <!-- Header -->
         <div class="row mb-4 mt-4">
             <div class="col-6">
-                <h3 class="prevent-select">Relatório de Vendas</h3>
+                <h3 class="prevent-select">Dados de Vendas</h3>
             </div>
 
             <div class="col-6 text-right">
@@ -44,10 +48,10 @@
                 <tr>
                     <th>Nome</th>
                     <th>Cargo</th>
-                    <th>Código do Vendedor</th>
+                    <th>CÃ³digo do Vendedor</th>
                     <th>Valor de Venda</th>
-                    <th>Código de Venda</th>
-                    <th>Ações</th>
+                    <th>CÃ³digo de Venda</th>
+                    <th>AÃ§Ãµes</th>
                 </tr>
             </thead>
             <tbody id="vendasBody">
@@ -62,12 +66,12 @@
             </tbody>
         </table>
         <div class="text-center">
-            <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas(), window.open('./relatorio.html')">Gerar Relatório</button>
+            <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas(), window.open('./relatorio.html')">Gerar RelatÃ³rio</button>
         </div>
     </div>
 
     <!-- Modal -->
-    <div id="modalAdicionarContato" class="modal">
+    <div id="modalAdicionarVenda" class="modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -86,7 +90,7 @@
                             <input type="text" class="form-control" id="cargoVendedor" required>
                         </div>
                         <div class="form-group">
-                            <label for="codVendedor">Código do Vendedor:</label>
+                            <label for="codVendedor">CÃ³digo do Vendedor:</label>
                             <input type="number" class="form-control" id="codVendedor" required>
                         </div>
                         <div class="form-group">
@@ -94,11 +98,11 @@
                             <input type="number" class="form-control" id="valorVenda" step="any" required>
                         </div>
                         <div class="form-group">
-                            <label for="codVenda">Código de Venda:</label>
+                            <label for="codVenda">CÃ³digo de Venda:</label>
                             <input type="number" class="form-control" id="codVenda" required>
                         </div>
                         <!-- Dispara o evento 'submit', pode ser resgatado no JS -->
-                        <button type="submit" onclick="adicionarContato(event)" class="btn btn-dark">Salvar</button>
+                        <button type="submit" onclick="adicionarVenda(event)" class="btn btn-dark">Salvar</button>
                     </form>
                 </div>
             </div>
@@ -106,7 +110,7 @@
     </div>
 
         <!-- Modal -->
-        <div id="modalEditarContato" class="modal">
+        <div id="modalEditarVenda" class="modal">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -125,7 +129,7 @@
                                 <input type="text" class="form-control" id="cargoEditar" required>
                             </div>
                             <div class="form-group">
-                                <label for="codVendedorEditar">Código do Vendedor:</label>
+                                <label for="codVendedorEditar">CÃ³digo do Vendedor:</label>
                                 <input type="number" class="form-control" id="codVendedorEditar" required>
                             </div>
                             <div class="form-group">
@@ -133,7 +137,7 @@
                                 <input type="number" class="form-control" id="valorVendaEditar" step="any" required>
                             </div>
                             <div class="form-group">
-                                <label for="codVendaEditar">Código de Venda:</label>
+                                <label for="codVendaEditar">CÃ³digo de Venda:</label>
                                 <input type="number" class="form-control" id="codVendaEditar" required>
                             </div>
                             <!-- Dispara o evento 'submit', pode ser resgatado no JS -->
@@ -144,7 +148,7 @@
             </div>
         </div>
     <!----------------------------- OVERLAY ----------------------------------->
-    <!-- position: fixed define a origem do bloco, que ocupará a tela inteira (0, 0) -->
+    <!-- position: fixed define a origem do bloco, que ocuparÃ¡ a tela inteira (0, 0) -->
     <div id="overlay" style="
             height: 100%;
             width: 100%;
@@ -157,15 +161,15 @@
 
     <script>
 
-        let vendasSorted= []; // array de vendas tratado
-        let vendas = []; // array que armazena as vendas
+        let vendasSorted = []; // Array de vendas tratado
+        let vendas = []; // Array que armazena as vendas
 
-        const minhaModalEditar = document.getElementById('modalEditarContato')
+        const minhaModalEditar = document.getElementById('modalEditarVenda')
         const btnEditar = document.getElementById('editarDados');
         const btnFecharEditar = document.getElementById('closeModalEditar')
         const formEditarVenda = document.getElementById('formEditarVenda');
 
-        const minhaModal = document.getElementById("modalAdicionarContato");
+        const minhaModal = document.getElementById("modalAdicionarVenda");
         const btnAdicionar = document.getElementById("btnAdicionar");
         const btnFechar = document.getElementById("closeModal");
         const formAdicionarVenda = document.getElementById('formAdicionarVenda')
@@ -188,11 +192,11 @@
                 venda.codVendedor = venda.codVendedor.padStart(3, '0')
                 venda.codVenda = venda.codVenda.padStart(3, '0')
 
-                if(venda.cargoVendedor === 'junior' || venda.cargoVendedor === 'Junior' || venda.cargoVendedor === 'Júnior'){
-                    venda.cargo = 'Júnior'
+                if(venda.cargoVendedor === 'junior' || venda.cargoVendedor === 'Junior' || venda.cargoVendedor === 'JÃºnior'){
+                    venda.cargo = 'JÃºnior'
                 } else if(venda.cargoVendedor === 'pleno' || venda.cargoVendedor === 'Pleno'){
                     venda.cargoVendedor = 'Pleno'
-                } else{venda.cargoVendedor = 'Sênior'}
+                } else{venda.cargoVendedor = 'SÃªnior'}
 
                 vendasBody.innerHTML += `
                     <tr>
@@ -215,7 +219,7 @@
             })
         }
 
-        function adicionarContato(event){
+        function adicionarVenda(event){
             event.preventDefault()
 
             // Armazenar os valores dos campos de input
@@ -231,9 +235,13 @@
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(venda)
-            }).then(() => {
-                    buscarVendas()
             })
+            .then(response => response.json())
+            .then(() => {
+                buscarVendas()
+            })
+            .catch(error => console.error('Error:', error));
+
             toggleModal(minhaModal)
             formAdicionarVenda.reset()
         }  
@@ -283,7 +291,7 @@
             renderizarTabela()
         }
 
-        //função que comunica o front-end com o back-end.
+        // FunÃ§Ã£o que comunica o front-end com o back-end
         function buscarVendas(){
             fetch('http://localhost:5000/vendas')
                 .then(response => response.json())
@@ -298,10 +306,10 @@
             let vendedores = []
             vendedor = {}
 
-            // como fazer? 
-                // verificar se a pessoa já foi adicionada, se não foi, adicionar
-                // criar um objeto de vendedor, para adicionar na checagem
-                // usar .includes para verificar
+            // Como fazer? 
+                // Verificar se a pessoa jÃ¡ foi adicionada, se nÃ£o foi, adicionar
+                // Criar um objeto de vendedor, para adicionar na checagem
+                // Usar .includes para verificar
             vendas.forEach(venda =>{
                 if(codVendasRepetidas.includes(venda.codVendedor)){
                 vendedores.forEach(vendedor =>{
@@ -311,11 +319,11 @@
                             vendedor.maiorVenda = venda.valorVenda
                         }
 
-                        if(vendedor.cargo === 'Júnior'){
+                        if(vendedor.cargo === 'JÃºnior'){
                             vendedor.comissao = vendedor.totalVendas * 0.01
                         }else if(vendedor.cargo === 'Pleno'){
                             vendedor.comissao = vendedor.totalVendas * 0.02
-                        }else if(vendedor.cargo === 'Sênior'){
+                        }else if(vendedor.cargo === 'SÃªnior'){
                             vendedor.comissao = vendedor.totalVendas * 0.03
                         }
                     }
@@ -326,7 +334,7 @@
                     let totalVendas = parseFloat(venda.valorVenda)
                     let maiorVenda = parseFloat(venda.valorVenda)
 
-                    if(cargo === 'Júnior'){
+                    if(cargo === 'JÃºnior'){
                         comissao = totalVendas * 0.01
                     }else if(cargo === 'Pleno'){
                         comissao = totalVendas * 0.02
@@ -353,7 +361,7 @@
         }
 
         
-        // Ouvidor de evento de clique dos botões
+        // Ouvidor de evento de clique dos botÃµes
         btnAdicionar.addEventListener("click", function () {
             toggleModal(minhaModal);
         });
@@ -369,5 +377,4 @@
         })
     </script>
 </body>
-
 </html>
