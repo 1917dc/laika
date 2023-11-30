@@ -89,7 +89,7 @@ function editVendas(req, res) {
     });
 
     // req.body accessa o JSON diretamente sem precisar converter manualmente
-    const venda = req.index;
+    const venda = req.body;
 
     db.all(`UPDATE vendas SET codVendedor = ?, nomeVendedor = ?, cargoVendedor = ?, valorVenda = ? WHERE codVenda = ?`, [
         venda.codVendedor,
