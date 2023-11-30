@@ -1,4 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
+const cargo = require('cargo');
 const express = require('express'); 
 
 // Essa função retorna uma instância de um aplicativo Express
@@ -78,8 +79,7 @@ function addVendas(req, res){
 }
 
 function editVendas(req, res) {
-    const nomeSearch = req.params.nomeVendedor; 
-    const venda = req.body;
+    console.log('Editando venda...')
 
     const db = new sqlite3.Database('./db.sqlite3', (err) => {
         if (err) {
@@ -88,45 +88,59 @@ function editVendas(req, res) {
         console.log('Conectado ao banco de dados.');
     });
 
-    db.run(
-        `UPDATE vendas SET nomeVendedor=?, cargoVendedor=?, codVendedor=?, valorVenda=?, codVenda=? WHERE nomeVendedor=?`,
-        [
-            venda.nomeVendedor,
-            venda.cargoVendedor,
-            venda.codVendedor,
-            venda.valorVenda,
-            venda.codVenda,
-            nomeSearch,
-        ],
-        (err) => {
-            if (err) {
-                console.log('Erro', err);
-            } else {
-                res.status(200).json(venda);
-                db.close((err) => {
-                    if (err) {
-                        console.log('Erro', err);
-                    } else {
-                        console.log('(EDIT) O banco de dados foi fechado.');
-                    }
-                });
-            }
+    // req.body accessa o JSON diretamente sem precisar converter manualmente
+    const venda = req.index;
+
+    db.all(`UPDATE vendas SET codVendedor = ?, nomeVendedor = ?, cargoVendedor = ?, valorVenda = ? WHERE codVenda = ?`, [
+        venda.codVendedor,
+        venda.nomeVendedor,
+        venda.cargoVendedor,
+        venda.valorVenda,
+        venda.codVenda
+    ], (err) => {
+        if(err){
+            throw err;
+        } else{
+            res.status(200).json(venda);
+            db.close((err) =>{
+                if(err){
+                    throw err;
+                }else{
+                    console.log('(EDIT) O banco de dados foi fechado.')
+                }
+            })
         }
-    );
+    })
 }
 
 function deleteVendas(req, res){
-    const nomeSearch = req.params.nomeVendedor;
-    const index = vendas.findIndex(venda => venda.nomeVendedor === nomeSearch)
+    console.log('Apagando venda...')
 
-    if(index > -1){
-        vendas.splice(index, 1)
-        res.statusCode = 200
-        res.status(200).json({ message: 'Apagado com sucesso.' });
-    } else{
-        res.statusCode = 404
-        res.status(404).json({ message: 'Rota não encontrada.' });
-    }
+    const db = new sqlite3.Database('./db.sqlite3', (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('Conectado ao banco de dados.');
+    });
+
+    // req.body accessa o JSON diretamente sem precisar converter manualmente
+    const venda = req.body;
+    console.log(venda)
+
+    db.all(`DELETE FROM vendas WHERE codVenda = ?`, [venda.codVenda], (err) => {
+        if(err){
+            throw err;
+        } else{
+            res.status(200);
+        }
+        db.close((err) =>{
+            if(err){
+                throw err;
+            }else{
+                console.log('(DELETE) O banco de dados foi fechado.')
+            }
+        })
+    })
 }
 
 // ---------------------------------- CONFIGURANDO O SERVIDOR ----------------------------------
@@ -137,8 +151,8 @@ app.use(express.static('public'));
 // CRUD - Definir as rotas
 app.get('/vendas', getVendas);
 app.post('/vendas', addVendas);
-app.put('/vendas/:nomeVendedor', editVendas);
-app.delete('/vendas/:nomeVendedor', deleteVendas);
+app.put('/vendas/:codVenda', editVendas);
+app.delete('/vendas/:codVenda', deleteVendas);
 
 // ---------------------------------- CRIAR O SERVIDOR ----------------------------------
 app.listen(port, () => console.log(`O servidor foi ligado na porta ${port}.`));

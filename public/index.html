@@ -267,7 +267,7 @@
                     codVenda: document.getElementById('codVendaEditar').value,
                 }
 
-                fetch(`http://localhost:5000/vendas/${venda.nomeVendedor}`, {
+                fetch(`http://localhost:5000/vendas/${venda.codVenda}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(novaVenda)
@@ -281,7 +281,7 @@
         }
 
         function excluirDados(index){
-            fetch(`http://localhost:5000/vendas/${vendas[index].nomeVendedor}`, {
+            fetch(`http://localhost:5000/vendas/${vendas[index].codVenda}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                 }).then(() => {
