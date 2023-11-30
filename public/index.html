@@ -281,12 +281,11 @@
         }
 
         function excluirDados(index){
+            vendas[index].codVenda = parseInt(vendas[index].codVenda)
             fetch(`http://localhost:5000/vendas/${vendas[index].codVenda}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
-                }).then(() => {
-                    buscarVendas()
-                })
+                }).then(buscarVendas())
 
             renderizarTabela()
         }

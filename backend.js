@@ -124,22 +124,23 @@ function deleteVendas(req, res){
     });
 
     // req.body accessa o JSON diretamente sem precisar converter manualmente
+
     const venda = req.url.split('/')[2];
         console.log(req.url.split('/'));
 
-    db.all(`DELETE FROM vendas WHERE codVenda = ?`, [venda.codVenda], (err) => {
+    db.all(`DELETE FROM vendas WHERE codVenda = ?`, [venda], (err) => {
         if(err){
             throw err;
         } else{
             res.status(200);
-            db.close((err) =>{
-                if(err){
-                    throw err;
-                }else{
-                    console.log('(DELETE) O banco de dados foi fechado.')
-                }
-            })
         }
+        db.close((err) =>{
+            if(err){
+                throw err;
+            }else{
+                console.log('(DELETE) O banco de dados foi fechado.')
+            }
+        })
     })
 }
 
