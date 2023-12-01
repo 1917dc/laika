@@ -22,4 +22,5 @@ Isso iniciará o servidor na porta 5000 ( http://localhost:5000 )
 ## Tecnologias Utilizadas
 - Bootstrap
 - Node.js
+- Express.js
 - SQLite3
