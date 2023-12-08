@@ -21,19 +21,19 @@
     <!-- Fundo -->
     <div class="wrapper">
         <!-- SEÇÃO 1 -->
-        <section class="section1">
+        <section class="section1" id="section1">
             <!-- Banner -->
             <div class="banner">
                 <div class="navbar">
                     <ul>
                         <li>
-                            <a href="#">Início</a>
+                            <a href="#section1">Início</a>
                         </li>
                         <li>
-                            <a href="#">Sobre</a>
+                            <a href="#section2">Sobre</a>
                         </li>
                         <li>
-                            <a href="#">Tabela</a>
+                            <a href="#section3">Simulador</a>
                         </li>
                     </ul>
                 </div>
@@ -49,7 +49,7 @@
                         <div class="logo__box">
                             <span>
                                 <i class="bi bi-rocket-takeoff-fill subtitulo"></i>
-                                O maior consórcio da América!
+                                Aqui seu Futuro Alcança as Estrelas!
                             </span>
                         </div>
                     </div> <!-- Fim do conteúdo da logo -->
@@ -72,33 +72,35 @@
         </div>
 
         <!-- SEÇÃO 2 -->
-            <section class="section2"> 
-
-                <img class="img__equipe" src="assets/reuniao.jpg" alt="">
-
-                <h1>
-                    <i class="bi bi-bar-chart-line-fill" style="color: #E14C2B;"></i>
-                    Vantagens
-                </h1>
-
-                <ul class="lista__vantagens">
-                    <div class="caixas">
-                        <p class="lista__vantagens--texto"><i class="bi bi-envelope-paper-fill simbolo"></i>Sem juros e sem burocracias</p>
-                        <p class="lista__vantagens--texto"><i class="bi bi-search simbolo"></i>Reajuste anual do crédito</p>
-                        <p class="lista__vantagens--texto"><i class="bi bi-calculator-fill simbolo"></i>Melhor planejamento financeiro</p>
-                        <p class="lista__vantagens--texto"><i class="bi bi-calendar-check-fill simbolo"></i>Chance mensal de contemplação</p>
-                        <p class="lista__vantagens--texto"><i class="bi bi-percent simbolo"></i>Planos com parcelas reduzidas</p>
+            <section class="section2" id="section2"> 
+                <div class="content-container">
+                    <div class="image-container">
+                        <img class="img-fluid img__equipe" src="./assets/reuniao.jpg" alt="Cinco pessoas estão reunidas no trabalho e discutem sobre algum tema.">
                     </div>
-                </ul>
+
+                    <div class="text-container">
+                        <h1>
+                            <i class="bi bi-bar-chart-line-fill" style="color: #E14C2B;"></i>
+                            Vantagens
+                        </h1>
+                        <ul class="lista__vantagens">
+                                <li><i class="bi bi-envelope-paper-fill simbolo"></i>Sem juros e sem burocracias</li>
+                                <li><i class="bi bi-search simbolo"></i>Reajuste anual do crédito</li>
+                                <li><i class="bi bi-calculator-fill simbolo"></i>Melhor planejamento financeiro</li>
+                                <li><i class="bi bi-calendar-check-fill simbolo"></i>Chance mensal de contemplação</li>
+                                <li><i class="bi bi-percent simbolo"></i>Planos com parcelas reduzidas</li>
+                        </ul>
+                    </div>
+                </div>
             </section>
 
         <!-- SEÇÃO 3 - Tabela -->
-        <section class="section3">
+        <section class="section3" id="section3">
             <div class="container mt-2">
                 <!-- Header -->
                 <div class="row mb-4 mt-4">
                     <div class="col-6">
-                        <h3 class="prevent-select">Dados de Vendas</h3>
+                        <h3 class="prevent-select">Simulador de Consórcio</h3>
                     </div>
 
                     <div class="col-6 text-right">
@@ -107,28 +109,31 @@
                     
                 </div>
                 <!-- Tabela -->
-                <table class="table table-hover table-dark">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Cargo</th>
-                            <th>Código do Vendedor</th>
-                            <th>Valor de Venda</th>
-                            <th>Código de Venda</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="vendasBody">
-                        <!-- <tr>
-                                <td>Fulano</td>
-                                <td>senior</td>
-                                <td>001</td>
-                                <td>999.99</td>
-                                <td>1%</td>
-                                <td>Editar/excluir</td>
-                            </tr> -->
-                    </tbody>
-                </table>
+                <div class="tabela-responsiva">
+                    <table class="table table-hover table-dark">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Cargo</th>
+                                <th>Código do Vendedor</th>
+                                <th>Valor de Venda</th>
+                                <th>Código de Venda</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vendasBody">
+                            <!-- <tr>
+                                    <td>Fulano</td>
+                                    <td>senior</td>
+                                    <td>001</td>
+                                    <td>999.99</td>
+                                    <td>1%</td>
+                                    <td>Editar/excluir</td>
+                                </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+
                 <div class="text-center">
                     <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas(), window.open('./relatorio.html')">Gerar Relatório</button>
                 </div>
@@ -217,7 +222,7 @@
         <div id="overlay" style="
                 height: 100%;
                 width: 100%;
-                background-color: rgb(0, 0, 0, 0.5);
+                background-color: rgb(0, 0, 0, 0.8);
                 display: none;
                 position: fixed;
                 top: 0;
@@ -231,13 +236,13 @@
                 <div class="footer-content">
                     <div class="footer-links">
                         <ul>
-                            <li><a href="#">Início</a></li>
-                            <li><a href="#">Sobre</a></li>
-                            <li><a href="#">Tabela</a></li>
+                            <li><a href="#section1">Início</a></li>
+                            <li><a href="#section2">Sobre</a></li>
+                            <li><a href="#section3">Tabela</a></li>
                         </ul>
                     </div>
                 </div>
-                <p class="footer-text">Projeto feito para conclusão da disciplina de Bases da Computação (2023/2°S).</p>
+                <p class="footer-text">Projeto feito para a disciplina de Bases da Computação (2023/2°S).</p>
                 <p class="footer-text">Desenvolvedores: Anael, Arthur, Luiz Gustavo.</p>
                 <div class="footer-social">
                     <a href="https://github.com/1917dc/projeto-JS" target="_blank"><i class="bi bi-github"></i></a>
@@ -248,221 +253,8 @@
 
     </div> <!-- Fim do wrapper -->
 
+    <!-- JS -->
     <script src="./js/scroll.js"></script>
-    <script>
-        let vendasSorted = []; // Array de vendas tratado
-        let vendas = []; // Array que armazena as vendas
-
-        const minhaModalEditar = document.getElementById('modalEditarVenda')
-        const btnEditar = document.getElementById('editarDados');
-        const btnFecharEditar = document.getElementById('closeModalEditar')
-        const formEditarVenda = document.getElementById('formEditarVenda');
-
-        const minhaModal = document.getElementById("modalAdicionarVenda");
-        const btnAdicionar = document.getElementById("btnAdicionar");
-        const btnFechar = document.getElementById("closeModal");
-        const formAdicionarVenda = document.getElementById('formAdicionarVenda')
-
-        const overlay = document.getElementById("overlay");
-        const gerarBtn = document.getElementById('gerarBtn');
-
-        function renderizarTabela() {
-            let vendasBody = document.getElementById('vendasBody')
-            vendasBody.innerHTML = '' // Limpa a tabela
-
-            vendas.forEach((venda, index) => {
-                venda.valorVenda = parseFloat(venda.valorVenda)
-                valorVendaFormatado = venda.valorVenda.toLocaleString('pt-BR', {
-                    style: 'currency', currency: 'BRL'
-                })
-                venda.codVenda = venda.codVenda.toString();
-                venda.codVendedor = venda.codVendedor.toString();
-
-                venda.codVendedor = venda.codVendedor.padStart(3, '0')
-                venda.codVenda = venda.codVenda.padStart(3, '0')
-
-                if(venda.cargoVendedor === 'junior' || venda.cargoVendedor === 'Junior' || venda.cargoVendedor === 'Júnior'){
-                    venda.cargo = 'Júnior'
-                } else if(venda.cargoVendedor === 'pleno' || venda.cargoVendedor === 'Pleno'){
-                    venda.cargoVendedor = 'Pleno'
-                } else{venda.cargoVendedor = 'Sênior'}
-
-                vendasBody.innerHTML += `
-                    <tr>
-                        <td>${venda.nomeVendedor}</td>
-                        <td>${venda.cargoVendedor}</td>
-                        <td>${venda.codVendedor}</td>
-                        <td>${valorVendaFormatado}</td>
-                        <td>${venda.codVenda}</td>
-                        <td style="display: flex">
-                            <button type="button" class="btn btn-light btn-sm text-center" onclick="overlay.style.display = 'block', editarVenda(${index})">
-                                Editar
-                            </button>
-
-                            <button type="button" class="btn btn-light btn-sm text-center ml-2" onclick="excluirDados(${index})">
-                                Excluir
-                            </button>
-                        </td>
-                    </tr>
-                    `
-            })
-        }
-
-        function adicionarVenda(event){
-            event.preventDefault()
-
-            // Armazenar os valores dos campos de input
-            let nomeVendedor = document.getElementById('nomeVendedor').value;
-            let cargoVendedor = document.getElementById('cargoVendedor').value;
-            let codVendedor = document.getElementById('codVendedor').value;
-            let valorVenda = document.getElementById('valorVenda').value;
-            let codVenda = document.getElementById('codVenda').value;
-
-            const venda = {nomeVendedor, cargoVendedor, codVendedor, valorVenda, codVenda}
-
-            fetch('http://localhost:5000/vendas', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(venda)
-            })
-            .then(response => response.json())
-            .then(() => {
-                buscarVendas()
-            })
-            .catch(error => console.error('Error:', error));
-
-            toggleModal(minhaModal)
-            formAdicionarVenda.reset()
-        }  
-
-        function editarVenda(index){
-            const venda = vendas[index]
-            toggleModal(minhaModalEditar)
-
-            document.getElementById('nomeEditar').value = venda.nomeVendedor 
-            document.getElementById('cargoEditar').value = venda.cargoVendedor
-            document.getElementById('codVendedorEditar').value = venda.codVendedor
-            document.getElementById('valorVendaEditar').value = venda.valorVenda
-            document.getElementById('codVendaEditar').value = venda.codVenda
-
-            formEditarVenda.addEventListener('submit', function(event){
-                event.preventDefault()
-
-                const novaVenda = {
-                    nomeVendedor: document.getElementById('nomeEditar').value,
-                    cargoVendedor: document.getElementById('cargoEditar').value,
-                    codVendedor: document.getElementById('codVendedorEditar').value,
-                    valorVenda: document.getElementById('valorVendaEditar').value,
-                    codVenda: document.getElementById('codVendaEditar').value,
-                }
-
-                fetch(`http://localhost:5000/vendas/${venda.codVenda}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(novaVenda)
-                }).then(() => {
-                    buscarVendas()
-                })
-
-                toggleModal(minhaModalEditar)
-                formEditarVenda.reset();
-            })
-        }
-
-        function excluirDados(index){
-            vendas[index].codVenda = parseInt(vendas[index].codVenda)
-            fetch(`http://localhost:5000/vendas/${vendas[index].codVenda}`, {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' },
-                }).then(buscarVendas())
-
-            renderizarTabela()
-        }
-
-        // Função que comunica o front-end com o back-end
-        function buscarVendas(){
-            fetch('http://localhost:5000/vendas')
-                .then(response => response.json())
-                .then(dados => {
-                    vendas = dados
-                    renderizarTabela()
-                })
-        }
-
-        function sortVendas(){
-            let codVendasRepetidas = []
-            let vendedores = []
-            vendedor = {}
-
-            /* Como fazer? 
-            - Verificar se a pessoa já foi adicionada, se não foi, adicionar
-            - Criar um objeto de vendedor, para adicionar na checagem
-            - Usar .includes para verificar */
-            vendas.forEach(venda =>{
-                if(codVendasRepetidas.includes(venda.codVendedor)){
-                vendedores.forEach(vendedor =>{
-                    if(venda.nomeVendedor === vendedor.nome){
-                        vendedor.totalVendas += venda.valorVenda
-                        if(venda.valorVenda > vendedor.maiorVenda){
-                            vendedor.maiorVenda = venda.valorVenda
-                        }
-
-                        if(vendedor.cargo === 'Júnior'){
-                            vendedor.comissao = vendedor.totalVendas * 0.01
-                        }else if(vendedor.cargo === 'Pleno'){
-                            vendedor.comissao = vendedor.totalVendas * 0.02
-                        }else if(vendedor.cargo === 'Sênior'){
-                            vendedor.comissao = vendedor.totalVendas * 0.03
-                        }
-                    }
-                })
-                } else{
-                    let nome = venda.nomeVendedor
-                    let cargo = venda.cargoVendedor
-                    let totalVendas = parseFloat(venda.valorVenda)
-                    let maiorVenda = parseFloat(venda.valorVenda)
-
-                    if(cargo === 'Júnior'){
-                        comissao = totalVendas * 0.01
-                    }else if(cargo === 'Pleno'){
-                        comissao = totalVendas * 0.02
-                    }else{
-                        comissao = totalVendas * 0.03
-                    }  
-                    vendedor = {nome, cargo, totalVendas, maiorVenda, comissao}
-
-                    vendedores.push(vendedor)
-                    codVendasRepetidas.push(venda.codVendedor);
-                }
-            })
-            console.log(vendedores)
-            console.log(localStorage)
-            localStorage.setItem('vendas',JSON.stringify(vendedores));
-            
-        }
-
-        function toggleModal(modal) {
-            const isModal = modal.style.display === 'block'
-
-            modal.style.display = isModal ? 'none' : 'block'
-            overlay.style.display = isModal ? 'none' : 'block'
-        }
-
-        
-        // Ouvidor de evento de clique dos botões
-        btnAdicionar.addEventListener("click", function () {
-            toggleModal(minhaModal);
-        });
-
-        btnFechar.addEventListener("click", function () {
-            toggleModal(minhaModal);
-        });
-
-        document.addEventListener('DOMContentLoaded', buscarVendas);
-
-        btnFecharEditar.addEventListener("click", function() {
-            toggleModal(minhaModalEditar)
-        })
-    </script>
+    <script src="./js/frontend.js"></script>
 </body>
 </html>
