@@ -1,5 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
-const cargo = require('cargo');
+// const cargo = require('cargo');
 const express = require('express'); 
 
 // Essa função retorna uma instância de um aplicativo Express

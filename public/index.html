@@ -2,165 +2,254 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta property="og:title" content="Hermes Express">
-    <meta property="og:description" content="Hermes Express - Consórcio ágil para você!">
+    <meta property="og:title" content="Consórcios LAIKA">
+    <meta property="og:description" content="Eleve a velocidade de seus consórcios!">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dados</title>
-    <link rel="icon" type="image/png" href="./img/favicon.png" />
+    <!-- jQuery pro scroll.js -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>LAIKA</title>
+    <link rel="icon" type="image/png" href="./assets/laika.png"/>
 
     <!-- CSS -->
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            margin: 5px;
-        }
-        .prevent-select{
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 </head>
-
 <body>
-    <div class="container mt-2">
-        <!-- Header -->
-        <div class="row mb-4 mt-4">
-            <div class="col-6">
-                <h3 class="prevent-select">Dados de Vendas</h3>
-            </div>
-
-            <div class="col-6 text-right">
-                <button id="btnAdicionar" type="button" class="btn btn-dark">+ Adicionar Venda</button>
-            </div>
-            
-        </div>
-        <!-- Tabela -->
-        <table class="table table-hover table-dark">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Cargo</th>
-                    <th>Código do Vendedor</th>
-                    <th>Valor de Venda</th>
-                    <th>Código de Venda</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody id="vendasBody">
-                <!-- <tr>
-                        <td>Fulano</td>
-                        <td>senior</td>
-                        <td>001</td>
-                        <td>999.99</td>
-                        <td>1%</td>
-                        <td>Editar/excluir</td>
-                    </tr> -->
-            </tbody>
-        </table>
-        <div class="text-center">
-            <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas(), window.open('./relatorio.html')">Gerar Relatório</button>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="modalAdicionarVenda" class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Adicionar Nova Venda</h5>
-                    <button type="button" class="close" id="closeModal">&times;</button>
+    <!-- Fundo -->
+    <div class="wrapper">
+        <!-- SEÇÃO 1 -->
+        <section class="section1">
+            <!-- Banner -->
+            <div class="banner">
+                <div class="navbar">
+                    <ul>
+                        <li>
+                            <a href="#">Início</a>
+                        </li>
+                        <li>
+                            <a href="#">Sobre</a>
+                        </li>
+                        <li>
+                            <a href="#">Tabela</a>
+                        </li>
+                    </ul>
                 </div>
+                
+                <!-- Logo-->
+                <div class="logo__container">
+                    <img src="assets/laika.png" alt="Laika dog" style="width: 199px; height: 265px;">
+                    <div class="logo_conteudo">
+                        <div class="logo__text-container">
+                            <span class="logo__texto primeiro">Consórcios</span>
+                            <span class="logo__texto segundo">LAIKA</span>
+                        </div>
+                        <div class="logo__box">
+                            <span>
+                                <i class="bi bi-rocket-takeoff-fill subtitulo"></i>
+                                O maior consórcio da América!
+                            </span>
+                        </div>
+                    </div> <!-- Fim do conteúdo da logo -->
+                </div> <!-- Fim do container da logo -->
+            </div> <!-- Fim do container do banner -->
+        </section>
 
-                <div class="modal-body ">
-                    <form id="formAdicionarVenda">
-                        <div class="form-group">
-                            <label for="nomeVendedor">Nome:</label>
-                            <input type="text" class="form-control" id="nomeVendedor" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="cargoVendedor">Cargo:</label>
-                            <input type="text" class="form-control" id="cargoVendedor" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="codVendedor">Código do Vendedor:</label>
-                            <input type="number" class="form-control" id="codVendedor" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="valorVenda">Valor de venda:</label>
-                            <input type="number" class="form-control" id="valorVenda" step="any" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="codVenda">Código de Venda:</label>
-                            <input type="number" class="form-control" id="codVenda" required>
-                        </div>
-                        <!-- Dispara o evento 'submit', pode ser resgatado no JS -->
-                        <button type="submit" onclick="adicionarVenda(event)" class="btn btn-dark">Salvar</button>
-                    </form>
-                </div>
-            </div>
+        <!-- Links -->
+        <!-- <div class="div__links">
+            <i class="bi bi-info-circle-fill links"></i>
+            <span>A</span>
+            <span>Laika</span>
+            <p class="link__consorcio">O Consórcio</p>
+        </div> -->
+
+        <!-- Botão de Scroll -->
+        <div class="scroll__button">
+            <img id="scroll" class="scroll__img" src="./assets/scroll_down.png" onclick="this.src='./assets/scroll_down.png';"/>
+            <p>Para Baixo</p>
         </div>
-    </div>
 
-        <!-- Modal -->
-        <div id="modalEditarVenda" class="modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Editar Venda</h5>
-                        <button type="button" class="close" id="closeModalEditar">&times;</button>
+        <!-- SEÇÃO 2 -->
+            <section class="section2"> 
+
+                <img class="img__equipe" src="assets/reuniao.jpg" alt="">
+
+                <h1>
+                    <i class="bi bi-bar-chart-line-fill" style="color: #E14C2B;"></i>
+                    Vantagens
+                </h1>
+
+                <ul class="lista__vantagens">
+                    <div class="caixas">
+                        <p class="lista__vantagens--texto"><i class="bi bi-envelope-paper-fill simbolo"></i>Sem juros e sem burocracias</p>
+                        <p class="lista__vantagens--texto"><i class="bi bi-search simbolo"></i>Reajuste anual do crédito</p>
+                        <p class="lista__vantagens--texto"><i class="bi bi-calculator-fill simbolo"></i>Melhor planejamento financeiro</p>
+                        <p class="lista__vantagens--texto"><i class="bi bi-calendar-check-fill simbolo"></i>Chance mensal de contemplação</p>
+                        <p class="lista__vantagens--texto"><i class="bi bi-percent simbolo"></i>Planos com parcelas reduzidas</p>
                     </div>
-    
-                    <div class="modal-body ">
-                        <form id="formEditarVenda">
-                            <div class="form-group">
-                                <label for="nomeEditar">Nome:</label>
-                                <input type="text" class="form-control" id="nomeEditar" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="cargoEditar">Cargo:</label>
-                                <input type="text" class="form-control" id="cargoEditar" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="codVendedorEditar">Código do Vendedor:</label>
-                                <input type="number" class="form-control" id="codVendedorEditar" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="valorVendaEditar">Valor de venda:</label>
-                                <input type="number" class="form-control" id="valorVendaEditar" step="any" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="codVendaEditar">Código de Venda:</label>
-                                <input type="number" class="form-control" id="codVendaEditar" required>
-                            </div>
-                            <!-- Dispara o evento 'submit', pode ser resgatado no JS -->
-                            <button type="submit" class="btn btn-dark">Salvar</button>
-                        </form>
+                </ul>
+            </section>
+
+        <!-- SEÇÃO 3 - Tabela -->
+        <section class="section3">
+            <div class="container mt-2">
+                <!-- Header -->
+                <div class="row mb-4 mt-4">
+                    <div class="col-6">
+                        <h3 class="prevent-select">Dados de Vendas</h3>
+                    </div>
+
+                    <div class="col-6 text-right">
+                        <button id="btnAdicionar" type="button" class="btn btn-dark">+ Adicionar Venda</button>
+                    </div>
+                    
+                </div>
+                <!-- Tabela -->
+                <table class="table table-hover table-dark">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Cargo</th>
+                            <th>Código do Vendedor</th>
+                            <th>Valor de Venda</th>
+                            <th>Código de Venda</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vendasBody">
+                        <!-- <tr>
+                                <td>Fulano</td>
+                                <td>senior</td>
+                                <td>001</td>
+                                <td>999.99</td>
+                                <td>1%</td>
+                                <td>Editar/excluir</td>
+                            </tr> -->
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <button type="button" id="gerarBtn" class="btn btn-dark m-5" onclick="sortVendas(), window.open('./relatorio.html')">Gerar Relatório</button>
+                </div>
+            </div>
+
+            <!-- Modal Adicionar -->
+            <div id="modalAdicionarVenda" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Adicionar Nova Venda</h5>
+                            <button type="button" class="close" id="closeModal">&times;</button>
+                        </div>
+
+                        <div class="modal-body ">
+                            <form id="formAdicionarVenda">
+                                <div class="form-group">
+                                    <label for="nomeVendedor">Nome:</label>
+                                    <input type="text" class="form-control" id="nomeVendedor" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cargoVendedor">Cargo:</label>
+                                    <input type="text" class="form-control" id="cargoVendedor" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="codVendedor">Código do Vendedor:</label>
+                                    <input type="number" class="form-control" id="codVendedor" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="valorVenda">Valor de venda:</label>
+                                    <input type="number" class="form-control" id="valorVenda" step="any" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="codVenda">Código de Venda:</label>
+                                    <input type="number" class="form-control" id="codVenda" required>
+                                </div>
+                                <!-- Dispara o evento 'submit', pode ser resgatado no JS -->
+                                <button type="submit" onclick="adicionarVenda(event)" class="btn btn-dark">Salvar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    <!----------------------------- OVERLAY ----------------------------------->
-    <!-- position: fixed define a origem do bloco, que ocupará a tela inteira (0, 0) -->
-    <div id="overlay" style="
-            height: 100%;
-            width: 100%;
-            background-color: rgb(0, 0, 0, 0.5);
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 2;"></div>
 
+            <!-- Modal Editar -->
+            <div id="modalEditarVenda" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Editar Venda</h5>
+                            <button type="button" class="close" id="closeModalEditar">&times;</button>
+                        </div>
+        
+                        <div class="modal-body ">
+                            <form id="formEditarVenda">
+                                <div class="form-group">
+                                    <label for="nomeEditar">Nome:</label>
+                                    <input type="text" class="form-control" id="nomeEditar" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cargoEditar">Cargo:</label>
+                                    <input type="text" class="form-control" id="cargoEditar" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="codVendedorEditar">Código do Vendedor:</label>
+                                    <input type="number" class="form-control" id="codVendedorEditar" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="valorVendaEditar">Valor de venda:</label>
+                                    <input type="number" class="form-control" id="valorVendaEditar" step="any" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="codVendaEditar">Código de Venda:</label>
+                                    <input type="number" class="form-control" id="codVendaEditar" required>
+                                </div>
+                                <!-- Dispara o evento 'submit', pode ser resgatado no JS -->
+                                <button type="submit" class="btn btn-dark">Salvar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!----------------------------- OVERLAY ----------------------------------->
+        <!-- position: fixed define a origem do bloco, que ocupará a tela inteira (0, 0) -->
+        <div id="overlay" style="
+                height: 100%;
+                width: 100%;
+                background-color: rgb(0, 0, 0, 0.5);
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 2;">
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="wrapper">
+                <div class="footer-content">
+                    <div class="footer-links">
+                        <ul>
+                            <li><a href="#">Início</a></li>
+                            <li><a href="#">Sobre</a></li>
+                            <li><a href="#">Tabela</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="footer-text">Projeto feito para conclusão da disciplina de Bases da Computação (2023/2°S).</p>
+                <p class="footer-text">Desenvolvedores: Anael, Arthur, Luiz Gustavo.</p>
+                <div class="footer-social">
+                    <a href="https://github.com/1917dc/projeto-JS" target="_blank"><i class="bi bi-github"></i></a>
+                </div>
+            </div>
+        </footer>
+
+
+    </div> <!-- Fim do wrapper -->
+
+    <script src="./js/scroll.js"></script>
     <script>
-
         let vendasSorted = []; // Array de vendas tratado
         let vendas = []; // Array que armazena as vendas
 
@@ -305,10 +394,10 @@
             let vendedores = []
             vendedor = {}
 
-            // Como fazer? 
-                // Verificar se a pessoa já foi adicionada, se não foi, adicionar
-                // Criar um objeto de vendedor, para adicionar na checagem
-                // Usar .includes para verificar
+            /* Como fazer? 
+            - Verificar se a pessoa já foi adicionada, se não foi, adicionar
+            - Criar um objeto de vendedor, para adicionar na checagem
+            - Usar .includes para verificar */
             vendas.forEach(venda =>{
                 if(codVendasRepetidas.includes(venda.codVendedor)){
                 vendedores.forEach(vendedor =>{
