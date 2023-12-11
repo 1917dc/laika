@@ -1,6 +1,6 @@
-## Hermes Express - Sistema de Consórcios
+## Laika Consórcios - Sistema de Consórcios
 
-O projeto Hermes Express é uma plataforma fictícia de consórcios inspirada na agilidade e eficiência do deus grego Hermes, o mensageiro dos deuses. Nossa identidade visual e conceito giram em torno da entrega rápida e confiável de soluções de consórcios.
+O projeto Laika é uma plataforma fictícia de consórcios. Nossa identidade visual e conceito giram em torno da entrega rápida e confiável de soluções de consórcios.
 
 Este mockup foi desenvolvido como parte do curso de Sistemas de Informação, para a matéria de Bases da Computação, demonstrando a aplicação prática de conceitos aprendidos em sala de aula.
 
