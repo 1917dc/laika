@@ -1,6 +1,6 @@
 ## Laika Consórcios - Sistema de Consórcios
 
-O projeto Laika é uma plataforma fictícia de consórcios. Nossa identidade visual e conceito giram em torno da entrega rápida e confiável de soluções de consórcios.
+O projeto Laika é uma plataforma fictícia de consórcios inspirada na cadelinha Laika que se tornou um dos primeiros animais a serem lançados no espaço e a primeira a orbitar a Terra. Nossa identidade visual e conceito giram em torno da Laika e buscamos trazer confiança em soluções de consórcios.
 
 Este mockup foi desenvolvido como parte do curso de Sistemas de Informação, para a matéria de Bases da Computação, demonstrando a aplicação prática de conceitos aprendidos em sala de aula.
 
