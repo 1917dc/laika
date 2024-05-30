@@ -6,6 +6,7 @@ Este mockup foi desenvolvido como parte do curso de Sistemas de Informação, pa
 
 ## Instruções de uso
 Este projeto conta com front-end utilizando ferramentas como o Bootstrap, além de um back-end personalizado construído com Node.js, necessário para o deploy.
+Certifique-se de ter a extensão do SQLite3 instalada no VSCode
 
 ### Instalação de dependências
 Para instalar todas as dependências necessárias em `package.json` (express, sqlite3) execute o seguinte comando no terminal:
